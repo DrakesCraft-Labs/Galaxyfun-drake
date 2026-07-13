@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-artifact="${1:-build/libs/Galaxyfun-11.0-Drake-1.21.1-SNAPSHOT.jar}"
+if [[ $# -gt 0 ]]; then
+    artifact="$1"
+else
+    artifacts=(build/libs/*.jar)
+    if [[ ${#artifacts[@]} -ne 1 || ! -f "${artifacts[0]}" ]]; then
+        echo "[ERROR] Expected exactly one built Galaxyfun artifact in build/libs." >&2
+        exit 1
+    fi
+    artifact="${artifacts[0]}"
+fi
 
 if [[ ! -f "$artifact" ]]; then
     echo "[ERROR] Artifact not found: $artifact" >&2

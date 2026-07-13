@@ -39,3 +39,16 @@ Galaxyfun:
 - no `world_galactifun_*` name overlaps an existing Galaxyfun world;
 - rocket assembly, item loss and disconnect paths pass a restart test;
 - all new content is feature-gated and disabled by default on the first release.
+
+## Consolidation matrix
+
+| Capability | Galactifun 1 | Galactifun2 | Galaxyfun first release | Compatibility / gate |
+| --- | --- | --- | --- | --- |
+| Existing Slimefun items and machines | Deployed source of truth | Different experimental catalog | Preserved with historical IDs | Existing items must resolve before enabling the server. |
+| Worlds, planets and player state | Existing production data | Test-world oriented implementation | Preserved; no automatic world creation | Validate one existing planet and do not enable GF2 world modules initially. |
+| Rocket, suit and alien PDC data | `galactifun-drake:*` namespace | Separate experimental state | Legacy namespace remains readable and writable | Test teleport, disconnect and restart paths with copied data. |
+| Commands | `galactifun`, `gf`, `galactic` | Separate command surface | Legacy aliases plus `galaxyfun` | Run the preflight against the staged JAR. |
+| New Galactifun2 content | Not present | Candidate only | Opt-in future intake | Requires collision, persistence and restart tests before inclusion. |
+
+`Galaxyfun` is the only future loadable addon. This matrix is a migration contract,
+not permission to load Galactifun, Galactifun2 and Galaxyfun together.
