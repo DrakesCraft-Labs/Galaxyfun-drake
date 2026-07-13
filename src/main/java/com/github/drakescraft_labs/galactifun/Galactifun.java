@@ -39,7 +39,6 @@ import dev.drake.infinitylib.core.AbstractAddon;
 
 import com.github.drakescraft_labs.slimefun4.api.MinecraftVersion;
 import com.github.drakescraft_labs.slimefun4.implementation.Slimefun;
-import com.github.drakescraft_labs.slimefun4.libraries.dough.updater.BlobBuildUpdater;
 import io.papermc.lib.PaperLib;
 
 
@@ -127,18 +126,6 @@ public final class Galactifun extends AbstractAddon {
         }
 
 
-
-        // BlobBuildUpdater solo acepta versiones estilo build de blob.guizhanss; las builds Drake rompen extractBuild().
-        String ver = getPluginVersion();
-        if (!isTest && this.getConfig().getBoolean("auto-update")
-                && !ver.contains("MODIFIED")
-                && !ver.toLowerCase(java.util.Locale.ROOT).contains("drake")) {
-            try {
-                new BlobBuildUpdater(this, this.getFile(), "Galactifun").start();
-            } catch (IllegalArgumentException ex) {
-                log(Level.WARNING, "Auto-updater omitido (versión no compatible con BlobBuild): " + ex.getMessage());
-            }
-        }
 
         this.alienManager = new AlienManager(this);
         this.worldManager = new WorldManager(this);
