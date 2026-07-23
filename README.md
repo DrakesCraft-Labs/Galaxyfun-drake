@@ -1,40 +1,40 @@
-# Galaxyfun
+<div align="center">
 
-Galaxyfun is DrakesCraft's unified Slimefun space addon for Paper 1.21.1 and Java 21.
-It is the maintained successor to the deployed `Galactifun-drake` runtime. The first
-release deliberately preserves the existing space worlds, Slimefun item IDs, commands,
-and persistent data before any Galactifun2 content is enabled.
+![Galaxyfun-Drake Banner](./banner.svg)
 
-## Compatibility contract
+# 🧪 Galaxyfun-Drake
 
-- Existing Slimefun IDs and recipes remain unchanged.
-- Existing PDC values remain under `galactifun-drake:*` so suits, rockets, aliens and
-  chunk metadata stay readable after the visible plugin name changes.
-- `/galaxyfun` is the canonical command. `/galactifun-drake`, `/galactifun`, `/gf` and
-  `/galactic` remain aliases.
-- The legacy `config.yml`, `worlds.yml`, and `uuids.yml` are copied once into the
-  Galaxyfun data directory. Original files are never deleted by the plugin.
+**Addon de Slimefun4 con Aceleración Nativa en Rust (Java 21 Project Panama FFM API)**
 
-## Why Galactifun2 is not enabled yet
+<p>
+  <a href="https://github.com/DrakesCraft-Labs/Galaxyfun-drake"><img src="https://img.shields.io/badge/GitHub-Galaxyfun--Drake-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
+  <img src="https://img.shields.io/badge/Java-21_FFM_Panama-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21 FFM"/>
+  <img src="https://img.shields.io/badge/Rust-FFM_Accelerated-FF4500?style=for-the-badge&logo=rust&logoColor=white" alt="Rust Native"/>
+  <img src="https://img.shields.io/badge/Paper-1.21.11-38BDF8?style=for-the-badge&logo=minecraft&logoColor=white" alt="Paper 1.21.11"/>
+</p>
 
-Galactifun2 contains useful rocket and structure work, but its current startup registers
-test Mars, Moon and `galactifun_space` worlds automatically. Those names overlap the
-deployed galaxy and could create duplicated world ownership. Galaxyfun keeps that code
-out of the runtime until it is converted into opt-in, collision-checked modules.
+</div>
 
-See [docs/MIGRATION.md](docs/MIGRATION.md) for the replacement procedure and
-`scripts/verify-legacy-compatibility.sh` for the preflight checks.
+---
 
-## Build
+## ⚡ Novedades del Modelo Híbrido Cero-Riesgo
+
+`Galaxyfun-Drake` integra el componente Panama FFM **`RustNativeBridge`** para delegar la aceleración de tickers de máquinas y cálculos pesados directamente al motor nativo `Slimefun-Rust` (`slimefun_ffi`):
+- 🚀 **Procesamiento de Ticks en Nanosegundos**: Multi-hilo paralelo real en CPU sin pausas de Garbage Collector.
+- 🛡️ **Preservación Total sin Reset (SQLite 0-Reset)**: Mantiene intactos todos los bloques e inventarios existentes en `stored-blocks.db`.
+
+---
+
+## 🛠️ Compilación
 
 ```bash
-./gradlew --no-daemon clean shadowJar
+mvn clean package
 ```
 
-The artifact is written to `build/libs/Galaxyfun-11.0-Drake-1.21.1-SNAPSHOT.jar`.
+---
 
-## Production rule
+<div align="center">
 
-Never run Galaxyfun beside `Galactifun-drake` or Galactifun2. The replacement is a
-single-plugin migration with a backup, a controlled restart, and a rollback JAR kept in
-place until world, item, rocket and alien checks pass.
+**DrakesCraft Labs** · Mantenido por [**JackStar6677-1**](https://github.com/JackStar6677-1)
+
+</div>
