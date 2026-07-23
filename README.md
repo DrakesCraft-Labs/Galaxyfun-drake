@@ -1,6 +1,6 @@
 <div align="center">
 
-![Galaxyfun-Drake Banner](./banner.svg)
+  <img src="https://raw.githubusercontent.com/DrakesCraft-Labs/Galaxyfun-drake/main/banner.svg" alt="Galaxyfun-drake Banner" width="920" />
 
 # 🧪 Galaxyfun-Drake
 
