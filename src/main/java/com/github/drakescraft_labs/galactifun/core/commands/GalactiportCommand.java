@@ -14,7 +14,6 @@ import com.github.drakescraft_labs.galactifun.Galactifun;
 import com.github.drakescraft_labs.galactifun.api.worlds.PlanetaryWorld;
 import com.github.drakescraft_labs.galactifun.base.items.knowledge.KnowledgeLevel;
 import dev.drake.infinitylib.commands.SubCommand;
-import io.papermc.lib.PaperLib;
 
 /**
  * Command to teleport to world spawns
@@ -41,7 +40,7 @@ public final class GalactiportCommand extends SubCommand {
             return;
         }
 
-        PaperLib.teleportAsync(p, world.getSpawnLocation());
+        p.teleportAsync(world.getSpawnLocation());
 
         PlanetaryWorld planetaryWorld = Galactifun.worldManager().getWorld(world);
         if (planetaryWorld != null && KnowledgeLevel.get(p, planetaryWorld) == KnowledgeLevel.NONE) {

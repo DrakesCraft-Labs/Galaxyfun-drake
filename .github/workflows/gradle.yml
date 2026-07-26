@@ -15,11 +15,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Checkout foundry
+      uses: actions/checkout@v4
+      with:
+        repository: DrakesCraft-Labs/drakes-slimefun-labs
+        path: drakes-slimefun-labs
+    - name: Checkout Slimefun core
+      uses: actions/checkout@v4
+      with:
+        repository: DrakesCraft-Labs/Slimefun4-Drake
+        path: slimefun-core
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         distribution: temurin
         java-version: '21'
+    - name: Install Drake dependencies
+      working-directory: drakes-slimefun-labs
+      run: |
+        mvn -B -ntp -N -DskipTests install
+        mvn -B -ntp -DskipTests -f sources/internal-metadata/patches/commons-lang-drake-patched/pom.xml install
+        mvn -B -ntp -DskipTests -f sources/dough-core/pom.xml install
+        mvn -B -ntp -DskipTests -Dslimefun.drake.version=11.0-Drake-1.21.11-SNAPSHOT -f ../slimefun-core/pom.xml install
+        mvn -B -ntp -Dmaven.test.skip=true -f sources/batch-2-expansion/SefiLib/pom.xml install
+        mvn -B -ntp -Dmaven.test.skip=true -f sources/batch-2-expansion/InfinityLib/pom.xml install
     - name: Build and preflight
       run: |
         ./gradlew --no-daemon clean build

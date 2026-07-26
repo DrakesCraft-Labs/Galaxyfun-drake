@@ -39,7 +39,6 @@ import dev.drake.infinitylib.core.AbstractAddon;
 
 import com.github.drakescraft_labs.slimefun4.api.MinecraftVersion;
 import com.github.drakescraft_labs.slimefun4.implementation.Slimefun;
-import io.papermc.lib.PaperLib;
 
 
 public final class Galactifun extends AbstractAddon {
@@ -97,11 +96,6 @@ public final class Galactifun extends AbstractAddon {
         migrateLegacyData();
 
         if (!isTest) {
-            if (!PaperLib.isPaper()) {
-                log(Level.SEVERE, "Galactifun only supports Paper and its forks (i.e. Airplane and Purpur)");
-                log(Level.SEVERE, "Please use Paper or a fork of Paper");
-                shouldDisable = true;
-            }
             if (Slimefun.getMinecraftVersion().isBefore(MinecraftVersion.MINECRAFT_1_17)) {
                 log(Level.SEVERE, "Galactifun only supports Minecraft 1.17 and above");
                 log(Level.SEVERE, "Please use Minecraft 1.17 or above");

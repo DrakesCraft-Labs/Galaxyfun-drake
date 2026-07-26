@@ -62,7 +62,6 @@ import com.github.drakescraft_labs.slimefun4.libraries.dough.collections.Randomi
 import com.github.drakescraft_labs.slimefun4.libraries.dough.items.CustomItemStack;
 import com.github.drakescraft_labs.slimefun4.libraries.dough.items.ItemUtils;
 import com.github.drakescraft_labs.slimefun4.libraries.dough.protection.Interaction;
-import io.papermc.lib.PaperLib;
 import com.github.drakescraft_labs.slimefun4.utils.ChatUtils;
 import com.github.drakescraft_labs.slimefun4.legacy.api.BlockStorage;
 import net.kyori.adventure.text.Component;
@@ -230,7 +229,7 @@ public abstract class Rocket extends SlimefunItem implements RecipeDisplayItem {
         sendLaunchMessage(160, p, launchMessages);
         Scheduler.run(200, () -> {
             p.sendMessage(ChatColor.YELLOW + "Verifying blast awesomeness...");
-            Chest chest = (Chest) PaperLib.getBlockState(destBlock, false).getState();
+            Chest chest = (Chest) destBlock.getState();
             Inventory inv = chest.getBlockInventory();
             inv.addItem(fuelLeft);
             inv.addItem(getItem());
@@ -244,7 +243,7 @@ public abstract class Rocket extends SlimefunItem implements RecipeDisplayItem {
                         if (entity instanceof Player) {
                             entity.setMetadata("CanTpAlienWorld", new FixedMetadataValue(Galactifun.instance(), true));
                         }
-                        PaperLib.teleportAsync(entity, destBlock.getLocation().add(0, 1, 0))
+                        entity.teleportAsync(destBlock.getLocation().add(0, 1, 0))
                                 .thenRun(() -> entity.removeMetadata("CanTpAlienWorld", Galactifun.instance()));
                         if (KnowledgeLevel.get(p, destination) == KnowledgeLevel.NONE) {
                             KnowledgeLevel.BASIC.set(p, destination);
@@ -262,7 +261,7 @@ public abstract class Rocket extends SlimefunItem implements RecipeDisplayItem {
                 Location rocketLocation = rocket.getLocation().add(0.5, -1, 0.5);
                 ArmorStand armorStand = rocketLocation.getWorld().spawn(rocketLocation, ArmorStand.class);
 
-                Skull skull = (Skull) PaperLib.getBlockState(rocket, false).getState();
+                Skull skull = (Skull) rocket.getState();
                 ItemStack stack = new ItemStack(skull.getType());
                 stack.editMeta(meta -> ((SkullMeta) meta).setPlayerProfile(skull.getPlayerProfile()));
 
