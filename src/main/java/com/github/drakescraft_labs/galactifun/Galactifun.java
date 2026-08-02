@@ -137,9 +137,9 @@ public final class Galactifun extends AbstractAddon {
         Scheduler.run(() -> log(Level.INFO,
                 "################# Galaxyfun " + getPluginVersion() + " #################",
                 "",
-                "Galactifun is open source, you can contribute or report bugs at: ",
-                getBugTrackerURL(),
-                "Join the Slimefun Addon Community Discord: discord.gg/SqD3gg5SAU",
+                "Galactifun DrakesCraft Edition is maintained by DrakesCraft Labs.",
+                "Repository: https://github.com/DrakesCraft-Labs/Galaxyfun-drake",
+                "Issues: https://github.com/DrakesCraft-Labs/Galaxyfun-drake/issues",
                 "",
                 "###################################################"
         ));
