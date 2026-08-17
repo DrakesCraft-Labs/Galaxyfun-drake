@@ -4,12 +4,11 @@
 
 # 🧪 Galaxyfun-Drake
 
-**Addon de Slimefun4 con Aceleración Nativa en Rust (Java 21 Project Panama FFM API)**
+**Addon de Slimefun4 para DrakesCraft — exploración espacial en 1.21.11**
 
 <p>
   <a href="https://github.com/DrakesCraft-Labs/Galaxyfun-drake"><img src="https://img.shields.io/badge/GitHub-Galaxyfun--Drake-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
-  <img src="https://img.shields.io/badge/Java-21_FFM_Panama-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21 FFM"/>
-  <img src="https://img.shields.io/badge/Rust-FFM_Accelerated-FF4500?style=for-the-badge&logo=rust&logoColor=white" alt="Rust Native"/>
+  <img src="https://img.shields.io/badge/Java-21-F89820?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21"/>
   <img src="https://img.shields.io/badge/Paper-1.21.11-38BDF8?style=for-the-badge&logo=minecraft&logoColor=white" alt="Paper 1.21.11"/>
 </p>
 
