@@ -61,7 +61,7 @@ public abstract class BossAlien<T extends Mob> extends Alien<T> {
 
             double finalHealth = entity.getHealth() - e.getFinalDamage();
             if (finalHealth > 0) {
-                bossbar.setProgress(finalHealth / maxHealth());
+                bossbar.setProgress(clampProgress(finalHealth / maxHealth()));
             }
         }
     }
@@ -73,7 +73,7 @@ public abstract class BossAlien<T extends Mob> extends Alien<T> {
 
             double finalHealth = entity.getHealth() - e.getFinalDamage();
             if (finalHealth > 0) {
-                bossbar.setProgress(finalHealth / maxHealth());
+                bossbar.setProgress(clampProgress(finalHealth / maxHealth()));
             }
         }
     }
@@ -146,7 +146,7 @@ public abstract class BossAlien<T extends Mob> extends Alien<T> {
 
         bossbar = this.style.create(manager.bossKey(), name());
         bossbar.setVisible(true);
-        bossbar.setProgress(entity.getHealth() / maxHealth());
+        bossbar.setProgress(clampProgress(entity.getHealth() / maxHealth()));
         this.bossBars.put(entity, bossbar);
         return bossbar;
     }
@@ -156,6 +156,16 @@ public abstract class BossAlien<T extends Mob> extends Alien<T> {
             bossbar.setVisible(false);
             bossbar.removeAll();
         }
+    }
+
+    /**
+     * The mob's live max-health attribute can exceed the boss's nominal
+     * {@link #maxHealth()} (e.g. external effects/equipment), which would
+     * otherwise make the ratio go above 1.0 and violate {@link BossBar#setProgress}'s
+     * [0.0, 1.0] contract.
+     */
+    private static double clampProgress(double progress) {
+        return Math.max(0.0, Math.min(1.0, progress));
     }
 
 }
