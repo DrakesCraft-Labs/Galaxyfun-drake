@@ -97,7 +97,17 @@ public final class LaunchPadCore extends TickingMenuBlock {
             }
         }
 
-        Skull skull = (Skull) b.getState();
+        // El bloque del cohete puede haber desaparecido (explosion, WorldEdit, borrado sin
+        // evento) dejando la entrada huerfana en BlockStorage: sin esta guarda el cast
+        // revienta cada tick hasta que Slimefun termina la plataforma entera.
+        if (!(b.getState() instanceof Skull skull)) {
+            if (dirty) {
+                menu.markDirty();
+            }
+            BlockStorage.clearBlockInfo(b);
+            return;
+        }
+
         PersistentDataContainer container = skull.getPersistentDataContainer();
         List<ItemStack> cargo = container.getOrDefault(Rocket.CARGO_KEY, PersistentType.ITEM_STACK_LIST, new ArrayList<>());
         if (cargo.size() < rocket.storageCapacity()) {

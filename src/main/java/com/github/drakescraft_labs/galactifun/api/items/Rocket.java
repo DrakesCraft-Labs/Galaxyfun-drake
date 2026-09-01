@@ -229,12 +229,31 @@ public abstract class Rocket extends SlimefunItem implements RecipeDisplayItem {
         sendLaunchMessage(160, p, launchMessages);
         Scheduler.run(200, () -> {
             p.sendMessage(ChatColor.YELLOW + "Verifying blast awesomeness...");
-            Chest chest = (Chest) destBlock.getState();
-            Inventory inv = chest.getBlockInventory();
-            inv.addItem(fuelLeft);
-            inv.addItem(getItem());
-            PersistentDataContainer container = ((Skull) rocket.getState()).getPersistentDataContainer();
-            container.getOrDefault(CARGO_KEY, PersistentType.ITEM_STACK_LIST, new ArrayList<>()).forEach(inv::addItem);
+
+            // Entre el despegue y este aterrizaje pasan 10 segundos: el cofre de destino o la
+            // cabeza del cohete pueden haber desaparecido. Recogemos la carga sin castear a
+            // ciegas y la entregamos aunque el cofre ya no exista, en vez de perderla.
+            List<ItemStack> payload = new ArrayList<>();
+            payload.add(fuelLeft);
+            payload.add(getItem());
+            if (rocket.getState() instanceof Skull rocketSkull) {
+                PersistentDataContainer container = rocketSkull.getPersistentDataContainer();
+                payload.addAll(container.getOrDefault(CARGO_KEY, PersistentType.ITEM_STACK_LIST, new ArrayList<>()));
+            }
+
+            if (destBlock.getState() instanceof Chest chest) {
+                Inventory inv = chest.getBlockInventory();
+                for (ItemStack stack : payload) {
+                    inv.addItem(stack).values().forEach(
+                            leftover -> destBlock.getWorld().dropItemNaturally(destBlock.getLocation(), leftover));
+                }
+            } else {
+                Location dropAt = destBlock.getLocation().add(0.5, 1, 0.5);
+                for (ItemStack stack : payload) {
+                    dropAt.getWorld().dropItemNaturally(dropAt, stack);
+                }
+                p.sendMessage(ChatColor.RED + "The landing chest was missing: your cargo was dropped at the landing site.");
+            }
 
             boolean showLaunchAnimation = false;
             for (Entity entity : playerWorld.getEntities()) {
@@ -261,11 +280,12 @@ public abstract class Rocket extends SlimefunItem implements RecipeDisplayItem {
                 Location rocketLocation = rocket.getLocation().add(0.5, -1, 0.5);
                 ArmorStand armorStand = rocketLocation.getWorld().spawn(rocketLocation, ArmorStand.class);
 
-                Skull skull = (Skull) rocket.getState();
-                ItemStack stack = new ItemStack(skull.getType());
-                stack.editMeta(meta -> ((SkullMeta) meta).setPlayerProfile(skull.getPlayerProfile()));
+                if (rocket.getState() instanceof Skull skull) {
+                    ItemStack stack = new ItemStack(skull.getType());
+                    stack.editMeta(meta -> ((SkullMeta) meta).setPlayerProfile(skull.getPlayerProfile()));
+                    armorStand.getEquipment().setHelmet(stack);
+                }
 
-                armorStand.getEquipment().setHelmet(stack);
                 armorStand.setInvisible(true);
                 armorStand.setInvulnerable(true);
                 armorStand.setMarker(false);
