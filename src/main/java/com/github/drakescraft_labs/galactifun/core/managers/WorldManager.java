@@ -229,14 +229,13 @@ public final class WorldManager implements Listener {
         if (e instanceof PlayerTeleportEndGatewayEvent) return;
         if (!e.getPlayer().hasPermission("galactifun.admin")) {
             if (e.getTo().getWorld() != null && e.getFrom().getWorld() != e.getTo().getWorld()) {
-                PlanetaryWorld fromWorld = getWorld(e.getFrom().getWorld());
                 PlanetaryWorld toWorld = getWorld(e.getTo().getWorld());
-                if (
-                        (fromWorld != null || toWorld != null)
-                        && !BaseUniverse.EARTH.equals(toWorld)
-                        && !BaseUniverse.EARTH.equals(fromWorld)
-                        || (BaseUniverse.EARTH.equals(fromWorld) && toWorld != null)
-                ) {
+                // Solo se restringe ENTRAR a un mundo planetario que no sea la Tierra: ahi es
+                // donde el cohete debe ser el unico transporte. Salir de un planeta hacia un
+                // mundo no planetario se permite siempre, porque DrakesCraft tiene cinco
+                // modalidades (skyblock, oneblock, clasico, laboratorio) que Galactifun no
+                // registra: cancelarlo dejaba al jugador atrapado en el planeta sin aviso.
+                if (toWorld != null && !BaseUniverse.EARTH.equals(toWorld)) {
                     boolean canTp = false;
                     for (MetadataValue value : e.getPlayer().getMetadata("CanTpAlienWorld")) {
                         canTp |= value.asBoolean();
@@ -245,6 +244,10 @@ public final class WorldManager implements Listener {
                         e.getPlayer().removeMetadata("CanTpAlienWorld", Galactifun.instance());
                     } else {
                         e.setCancelled(true);
+                        e.getPlayer().sendMessage(ChatColor.RED
+                                + "Solo puedes llegar a "
+                                + toWorld.name()
+                                + " en cohete. Despega desde la Tierra con una plataforma de lanzamiento.");
                     }
                 }
             }

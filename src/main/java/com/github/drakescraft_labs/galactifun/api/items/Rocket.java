@@ -41,6 +41,7 @@ import org.bukkit.util.Vector;
 import com.github.drakescraft_labs.galactifun.Galactifun;
 import com.github.drakescraft_labs.galactifun.api.worlds.PlanetaryWorld;
 import com.github.drakescraft_labs.galactifun.base.BaseItems;
+import com.github.drakescraft_labs.galactifun.base.BaseUniverse;
 import com.github.drakescraft_labs.galactifun.base.items.knowledge.KnowledgeLevel;
 import com.github.drakescraft_labs.galactifun.core.WorldSelector;
 import com.github.drakescraft_labs.galactifun.core.managers.WorldManager;
@@ -131,7 +132,10 @@ public abstract class Rocket extends SlimefunItem implements RecipeDisplayItem {
         WorldManager worldManager = Galactifun.worldManager();
         PlanetaryWorld currentWorld = worldManager.getWorld(p.getWorld());
         if (currentWorld == null) {
-            p.sendMessage(ChatColor.RED + "You cannot travel to space from this world!");
+            p.sendMessage(ChatColor.RED
+                    + "Desde este mundo no se puede despegar. Los cohetes solo funcionan en "
+                    + BaseUniverse.EARTH.name()
+                    + " y en los planetas ya visitados.");
             return;
         }
 
